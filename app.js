@@ -1,17 +1,32 @@
 const http = require('http');
+const express = require('express');
+const path = require('path');
 
-const server = http.createServer((req, res) => {
-  console.log(req.url);
-  console.log(req.method);
-  console.log(req.headers);
-//   console.log(res);
+const adminRoutes = require('./routes/admin');
+const shopRoutes = require('./routes/shop');
 
-res.setHeader('Content-Type', 'text/html');
-res.write('<html>');
-res.write('<head><title>My First Page</title></head>');
-res.write('<body>Hello from my node server</body>');
-res.write('</html>');
-res.end();
+const errorController = require('./controllers/error');
+
+const app = express();
+
+app.set('view engine', 'ejs');
+app.set('views', 'views');
+
+app.use(express.urlencoded({extended: false}));
+app.use(express.static(path.join(__dirname, 'public')));
+
+app.use('/admin', adminRoutes);
+app.use('/', shopRoutes);
+
+
+app.use(errorController.get404);
+
+// Create server
+const server = http.createServer(app);
+
+// Start server
+const PORT = process.env.PORT || 3000;
+server.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
 });
 
-server.listen(3000);

@@ -1,27 +1,27 @@
-const fs = require('fs');
-const path = require('path');
+// const fs = require('fs');
+// const path = require('path');
 
 const db = require('../util/database');
 
-const p = path.join(
-  path.dirname(process.mainModule.filename),
-  'data',
-  'products.json'
-);
+// const p = path.join(
+//   path.dirname(process.mainModule.filename),
+//   'data',
+//   'products.json'
+// );
 
-const getProductsFromFile = (cb) => {
-  fs.readFile(p, (err, fileContent) => {
-    if (err) {
-      cb([]);
-    } else {
-      try {
-        cb(JSON.parse(fileContent));
-      } catch (parseErr) {
-        cb([]);
-      }
-    }
-  });
-};
+// const getProductsFromFile = (cb) => {
+//   fs.readFile(p, (err, fileContent) => {
+//     if (err) {
+//       cb([]);
+//     } else {
+//       try {
+//         cb(JSON.parse(fileContent));
+//       } catch (parseErr) {
+//         cb([]);
+//       }
+//     }
+//   });
+// };
 
 module.exports = class Product {
   constructor(title, imageUrl, description, price) {
@@ -31,18 +31,25 @@ module.exports = class Product {
     this.price = price;
   }
 
+  // save() {
+  //   const rand = 1000;
+  //   this.id = Math.floor(Math.random() * 1000 + rand).toString();
+  //   getProductsFromFile((products) => {
+  //     products.push(this);
+  //     fs.writeFile(p, JSON.stringify(products), (err) => {
+  //       console.log(err);
+  //     });
+  //   });
+  // }
+
   save() {
-    const rand = 1000;
-    this.id = Math.floor(Math.random() * 1000 + rand).toString();
-    getProductsFromFile((products) => {
-      products.push(this);
-      fs.writeFile(p, JSON.stringify(products), (err) => {
-        console.log(err);
-      });
-    });
+    return db.execute(
+      'INSERT INTO products (title, price, imageUrl, description) VALUES (?, ?, ?, ?)',
+      [this.title, this.price, this.imageUrl, this.description]
+    );
   }
 
-  static fetchAll(cb) {
+  static fetchAll() {
     // getProductsFromFile(cb);
 
     // db.execute('SELECT * FROM products', [])
@@ -54,10 +61,12 @@ module.exports = class Product {
     return db.execute('SELECT * FROM products', []);
   }
 
-  static fetchById(idx, cb) {
-    getProductsFromFile((products) => {
-      const product = products.find((p) => p.id === idx);
-      cb(product);
-    });
+  static fetchById(idx) {
+    // getProductsFromFile((products) => {
+    //   const product = products.find((p) => p.id === idx);
+    //   cb(product);
+    // });
+
+    return db.execute('SELECT * FROM products WHERE products.id = ?', [idx]);
   }
 };

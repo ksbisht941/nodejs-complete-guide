@@ -1,10 +1,12 @@
-const fs = require("fs");
-const path = require("path");
+const fs = require('fs');
+const path = require('path');
+
+const db = require('../util/database');
 
 const p = path.join(
   path.dirname(process.mainModule.filename),
-  "data",
-  "products.json"
+  'data',
+  'products.json'
 );
 
 const getProductsFromFile = (cb) => {
@@ -41,7 +43,15 @@ module.exports = class Product {
   }
 
   static fetchAll(cb) {
-    getProductsFromFile(cb);
+    // getProductsFromFile(cb);
+
+    // db.execute('SELECT * FROM products', [])
+    //   .then(([rows, fieldData]) => {
+    //     cb(rows);
+    //   })
+    //   .catch(err => console.log(err));
+
+    return db.execute('SELECT * FROM products', []);
   }
 
   static fetchById(idx, cb) {

@@ -1,29 +1,21 @@
 {
   "name": "nodejs-complete-guide",
   "version": "1.0.0",
+  "description": "Complete Node.js Guide",
   "main": "app.js",
   "scripts": {
     "start": "nodemon app.js",
-    "lint": "eslint .",
-    "lint:fix": "eslint . --fix",
-    "format": "prettier --write ."
+    "start-server": "node app.js"
   },
   "author": "kevin",
   "license": "ISC",
-  "description": "Nodejs Complete Guide",
   "devDependencies": {
-    "@eslint/js": "^9.24.0",
-    "eslint": "^9.24.0",
-    "eslint-config-prettier": "^10.1.1",
-    "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-promise": "^7.2.1",
-    "globals": "^16.0.0",
-    "nodemon": "^3.1.9",
-    "prettier": "^3.5.3"
+    "nodemon": "^3.1.9"
   },
   "dependencies": {
+    "body-parser": "^1.18.3",
     "ejs": "^3.1.10",
-    "express": "^5.1.0",
+    "express": "^4.16.3",
     "express-handlebars": "^8.0.1",
     "mysql2": "^3.14.0",
     "pug": "^3.0.3",

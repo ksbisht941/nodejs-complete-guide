@@ -1,0 +1,108 @@
+Project Architecture & Design Notes
+=================================
+
+HIGH LEVEL DESIGN OVERVIEW
+-------------------------
+1. System Architecture
+   - Node.js backend with Express framework
+   - MVC architectural pattern
+   - RESTful API + GraphQL dual interface
+   - NoSQL primary database (MongoDB)
+
+2. Core Components
+   - Web Server: Express.js application server
+   - Database: MongoDB for persistence
+   - Template Engine: EJS for server-side rendering
+   - API Gateway: Express router + GraphQL endpoint
+
+3. Key Features
+   - Product management system
+   - Shopping cart functionality
+   - User authentication
+   - Admin dashboard
+   - Responsive frontend
+
+4. System Integration
+   - Database connectivity via MongoDB driver
+   - Session management
+   - Static file serving
+   - Error handling middleware
+
+5. Scalability Considerations
+   - Modular component design
+   - Database abstraction layer
+   - Separate development/production configs
+   - API versioning support
+
+DETAILED IMPLEMENTATION
+----------------------
+
+1. Database Layer
+----------------
+- Dual database support: MongoDB (current) & MySQL/Sequelize (deprecated)
+- MongoDB connection using singleton pattern
+- Models implement basic CRUD operations
+- Database abstraction allows easy switching between implementations
+
+2. Application Structure
+-----------------------
+MVC Pattern:
+- Models: Product, User, Cart
+- Views: EJS templating
+- Controllers: Error, Admin, Shop
+
+3. API Design
+------------
+- REST endpoints via Express
+- GraphQL implementation
+  * Schema-first approach
+  * Basic resolvers for products
+- Both APIs share same business logic
+
+4. Authentication & Security
+--------------------------
+- User sessions
+- Protected admin routes
+- Basic error handling
+- No JWT implementation yet
+
+5. Frontend
+----------
+- EJS templating engine
+- Responsive navigation
+- Static asset serving
+- Mobile-first approach
+
+6. Development Setup
+-------------------
+Tools:
+- Nodemon for hot reload
+- ESLint for code quality
+- Jest for testing
+- Prettier for formatting
+
+7. Data Models
+-------------
+Product:
+- id (ObjectId)
+- title
+- imageUrl
+- description
+- price
+
+User:
+- id (ObjectId)
+- name
+- email
+
+Cart:
+- products (Array)
+- totalPrice
+
+8. TODO/Improvements
+-------------------
+- Implement proper authentication
+- Add input validation
+- Enhance error handling
+- Complete GraphQL implementation
+- Add comprehensive testing
